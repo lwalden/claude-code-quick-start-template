@@ -1,159 +1,45 @@
-# PROGRESS.md - Development Progress Tracker
+# PROGRESS.md - Session Continuity
 
-> **This file is the source of truth for session continuity.**
-> Claude should read this file at the start of every session to understand current state.
+> Claude reads this file FIRST every session. Keep it lean.
+> When this file exceeds 100 lines, run `/archive` to move old entries to `docs/archive/`.
 
 ---
 
 ## Current State
 
 **Phase:** 1 - Foundation
-**Week:** 1
 **Last Updated:** [DATE]
-**Last Session Focus:** [Brief description]
+**Last Session:** [Brief description]
 
 ---
 
-## Session Resume Checklist
-
-When starting a new session, Claude should:
-1. Read this PROGRESS.md file first
-2. Check DECISIONS.md for any architectural decisions
-3. Review any open PRs with `gh pr list`
-4. Check git status for any uncommitted work
-5. Resume from the "Next Session Should" section below
-
----
-
-## Completed Tasks
-
-| Task | Date | Notes |
-|------|------|-------|
-| Created repository | [DATE] | Initial setup |
-| Added CLAUDE.md | [DATE] | Development orchestration instructions |
-| Added docs/strategy-roadmap.md | [DATE] | Business context and technical roadmap |
-| Session continuity setup | [DATE] | Added PROGRESS.md, DECISIONS.md |
-
----
-
-## In Progress
+## Active Tasks
 
 | Task | Status | Notes |
 |------|--------|-------|
-| [Task description] | [Percentage or status] | [Notes] |
+| Project initialization | Not started | Run /setup to begin |
 
 ---
 
-## Blocked / Awaiting Human Action
+## Blocked / Awaiting Human
 
-| Item | What's Needed | Date Added |
-|------|---------------|------------|
-| [Item description] | [What the human needs to do] | [DATE] |
+| Item | What's Needed | Added |
+|------|---------------|-------|
+| *None yet* | | |
 
 ---
 
 ## Next Session Should
 
-1. **[Priority 1]** - [Description of what to do first]
-2. **[Priority 2]** - [Description of what to do next]
-3. **[Priority 3]** - [Description of lower priority item]
-4. **Reminder:** [Any important reminders or deadlines]
+1. **Run /setup** -- Initialize the project with actual values
+2. **Run /plan** -- Create the strategy roadmap
+3. **Begin Phase 1** -- Start building
 
 ---
 
-## Phase Task Status
+## Recent Sessions (keep last 3, archive older)
 
-### Phase 1: Foundation
-
-#### Week 1: Project Setup
-- [ ] **Task 1.1:** [Task description]
-- [ ] **Task 1.2:** [Task description]
-- [ ] **Task 1.3:** [Task description]
-
-#### Week 2: [Focus Area]
-- [ ] **Task 2.1:** [Task description]
-- [ ] **Task 2.2:** [Task description]
-
-### Phase 2: Core Features
-*To be detailed when Phase 1 completes*
-
-### Phase 3: Polish & Launch
-*To be detailed when Phase 2 completes*
+*No sessions yet. First session summary will appear here after running `/checkpoint`.*
 
 ---
-
-## Environment & Resources
-
-<!-- Document any resources created or configured -->
-
-### Development Environment
-| Resource | Name/Location | Status |
-|----------|---------------|--------|
-| Repository | [URL] | Active |
-| [Resource type] | [Name] | [Status] |
-
-### External Services
-| Service | Account/Status | Notes |
-|---------|----------------|-------|
-| [Service name] | [Configured/Pending] | [Notes] |
-
-**Credentials stored in `.env` (gitignored)**
-
----
-
-## Recurring Tasks
-
-| Task | Frequency | Owner | Notes |
-|------|-----------|-------|-------|
-| Dependency security scan | Monthly | Claude | Run vulnerability check |
-| Review progress | Weekly | Human | Sync on priorities |
-| Backup verification | Monthly | Human | Verify backups working |
-
----
-
-## Notes for Future Sessions
-
-*Add any context that would be helpful for future sessions:*
-
-- [Note about human developer preferences]
-- [Note about project constraints]
-- [Note about workflow preferences]
-- [Note about technical decisions pending]
-
----
-
-## Recent Session Summaries
-
-### Session: [DATE] (Session N)
-**Focus:** [What was worked on]
-**What happened:**
-- [Bullet point summary of actions taken]
-- [What was created/modified]
-- [Any issues encountered]
-
-**Outcome:** [Brief summary of result]
-
----
-
-### Session: [DATE] (Session N-1)
-**Focus:** [What was worked on]
-**What happened:**
-- [Bullet point summary]
-
-**Outcome:** [Brief summary of result]
-
----
-
-### Session Template (Copy for new sessions)
-```markdown
-### Session: [DATE] (Session N)
-**Focus:** [What was worked on]
-**What happened:**
-- 
-
-**Outcome:** 
-```
-
----
-
-*This file should be updated at the end of every development session.*
+<!-- Older sessions: docs/archive/progress-archive.md -->
