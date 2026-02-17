@@ -1,7 +1,7 @@
 # AIAgentMinder
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-5.0-blue)
+![Version](https://img.shields.io/badge/version-0.5.0-blue)
 
 A governance and lifecycle framework for AI coding agents. Adds persistent session memory, architectural decision tracking, and structured planning to help you take a project from idea to MVP and beyond.
 
