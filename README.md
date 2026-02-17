@@ -17,10 +17,10 @@ AI coding agents are powerful, but multi-session projects need structure:
 |---|---|
 | Agent forgets what happened last session | **PROGRESS.md** -- git-tracked audit trail read first every session |
 | Agent re-debates past decisions | **DECISIONS.md** -- ADR log with trigger criteria prevents re-debating |
-| Projects start without clear goals | **/plan** -- structured interview that produces a strategy roadmap with quality tiers |
-| Sessions end with loose ends | **/checkpoint** -- end-of-session housekeeping |
-| Dangerous commands slip through | **settings.json** -- minimal permissions baseline with explicit deny list |
-| Context lost after compaction | **Governance hooks** -- auto re-inject project state after context compaction |
+| Projects start without clear goals | **Plan mode** -- structured interview that produces a strategy roadmap with quality tiers |
+| Sessions end with loose ends | **Session cleanup** -- updates PROGRESS.md at session end so the next session resumes with a single prompt |
+| Dangerous commands slip through | **Safe defaults** -- minimal permissions baseline with explicit deny list (Claude Code); Copilot org policies supported |
+| Context lost between sessions | **Session continuity** -- project state is re-injected at session start so the agent is oriented without re-prompting |
 
 ---
 
@@ -109,38 +109,45 @@ Other agents: "Read AGENTS.md and PROGRESS.md, then start Phase 1."
 
 ### Governance Hooks
 
-Four cross-platform hooks (Node.js) run automatically for Claude Code; the same scripts are wired as Copilot hooks for GitHub Copilot:
+Four Node.js scripts handle session automation. They run automatically for Claude Code and GitHub Copilot; for other agents the same outcomes are achieved manually by following the session protocol in `AGENTS.md`.
 
-| Hook | Event | What It Does |
-|------|-------|-------------|
-| Timestamp | Stop | Updates "Last Updated" in PROGRESS.md |
-| Auto-commit | Stop | Git checkpoint on feature branches (tracked files only, respects git hooks) |
-| Context re-injection | SessionStart | Re-injects PROGRESS.md and DECISIONS.md after context compaction |
-| Auto-format | PostToolUse | Runs project formatters (prettier, black, rustfmt, etc.) after edits |
+| Hook | Trigger | What It Does | Claude Code | Copilot | Codex / Cursor |
+|------|---------|-------------|:-----------:|:-------:|:--------------:|
+| Timestamp | Session end | Updates "Last Updated" in PROGRESS.md | Auto | Auto | Manual |
+| Auto-commit | Session end | Git checkpoint on feature branches (tracked files only) | Auto | Auto | Manual |
+| Context reload | Session start | Re-injects PROGRESS.md and DECISIONS.md after context reset | Auto | Auto | N/A |
+| Auto-format | After file edit | Runs project formatters (prettier, black, rustfmt, etc.) | Auto | Auto | Manual |
 
-### Permissions (Claude Code)
+### Permissions (Claude Code / GitHub Copiot only)
 
+Claude Code:
 Starts with ~20 safe commands (git, gh, basic utilities). Stack-specific tools added during `/setup`. Dangerous operations are explicitly denied:
 - `rm -rf /`, `~`, `C:`, `.` -- catastrophic deletion
 - `git push --force` / `-f` -- history rewriting
 - `git reset --hard origin` -- destructive reset
 - `git clean -fd`, `chmod -R 777` -- unsafe operations
 
+GitHub Copilot:
+For GitHub Copilot, equivalent safety controls are available via Copilot org-level policies and the `preToolUse` hook in `.github/hooks/`.
+
 ---
 
 ## Commands
 
-| Command | Purpose | Works with |
-|---------|---------|-----------|
-| `/setup` | Initialize a project (run from this template repo) | Claude Code |
-| `/plan` | Create strategy roadmap via structured interview | Claude Code |
-| `/checkpoint` | End-of-session: update tracking files, commit | Claude Code |
+| Action | Claude Code | Other agents |
+|--------|-------------|-------------|
+| Initialize a project | `/setup` | `"Read SETUP.md and follow the instructions"` |
+| Create strategy roadmap | `/plan` | `"Read PLAN.md and follow the instructions"` |
+| End-of-session cleanup | `/checkpoint` | `"Update PROGRESS.md and DECISIONS.md, then commit"` |
+| Resume next session | `"Read CLAUDE.md and PROGRESS.md, then resume"` | `"Read AGENTS.md and PROGRESS.md, then resume"` |
 
 ---
 
 ## How It Works
 
 **Session continuity:** The agent reads PROGRESS.md at session start. At session end, `/checkpoint` (or the auto-commit hook) preserves state. Between sessions, progress lives in Git -- any agent can pick up where another left off.
+
+**Session resilience:** For Claude Code and GitHub Copilot, governance hooks fire on session end regardless of how the session terminates -- including abrupt endings from rate limits, subscription cutoffs, or crashes. PROGRESS.md is timestamped and staged work is committed automatically before the session closes. For Codex and Cursor (no hook system), an abrupt session end leaves no automatic record: uncommitted changes are untracked and PROGRESS.md is not updated. If you use those agents on active work, committing frequently and running session cleanup manually reduces the risk of losing context.
 
 **Context budget:** Files are sized for minimal token consumption. For Claude Code: CLAUDE.md (~15 lines) imports AGENTS.md (~80 lines) = ~95 lines per session. PROGRESS.md (~20 lines) is read first every session. Larger files are on-demand. PROGRESS.md self-trims: only the 3 most recent session notes are kept.
 
