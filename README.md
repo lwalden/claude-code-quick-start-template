@@ -101,7 +101,7 @@ Starts with ~20 safe commands (git, gh, basic utilities). Stack-specific tools a
 
 **Session continuity:** Claude reads PROGRESS.md at session start. At session end, `/checkpoint` (or the auto-commit hook) preserves state. Between sessions, progress lives in Git.
 
-**Context budget:** Files are sized for minimal token consumption. CLAUDE.md (~90 lines) and PROGRESS.md (~20 lines) are read every session. Larger files are on-demand. When PROGRESS.md exceeds 100 lines, `/checkpoint` archives old entries.
+**Context budget:** Files are sized for minimal token consumption. CLAUDE.md (~90 lines) and PROGRESS.md (~20 lines) are read every session. Larger files are on-demand. Run `/checkpoint` at the end of each session -- it checks PROGRESS.md size and archives old entries if it exceeds 100 lines.
 
 **Decision tracking:** DECISIONS.md prevents re-debating. Claude checks it before architectural choices. Trigger criteria: library/framework choice, API design, auth approach, data model change, build/deploy decision.
 
