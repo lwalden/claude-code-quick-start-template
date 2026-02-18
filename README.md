@@ -91,6 +91,27 @@ Claude already has your tasks, blockers, and priorities. For the first session o
 
 ---
 
+## What a Session Looks Like
+
+**Session 1 — Planning:**
+Run `/plan`. Claude asks about your project in grouped rounds. You describe a recipe sharing API.
+Claude generates `docs/strategy-roadmap.md` with MVP features, stack choices, and a quality tier.
+Run `/handoff`. PROGRESS.md now says "Phase 1 ready. Next: scaffold project structure."
+
+**Session 2 — Building:**
+Open Claude Code. It already knows the project state (hook injected PROGRESS.md).
+Say "Start on the next priority." Claude scaffolds the Express app, sets up routes, writes initial tests.
+Run `/handoff`. PROGRESS.md now says "GET /recipes working with tests. Next: POST endpoint + validation."
+
+**Session 3 — Continuing:**
+Open a fresh Claude Code tab. Say "Resume."
+Claude picks up from the handoff: implements POST /recipes with Zod validation, adds error handling.
+Decides to use Zod for validation — logs it in DECISIONS.md with alternatives considered and tradeoffs.
+
+See a [full demo walkthrough](examples/demo-transcript.md) with actual prompts and session state changes.
+
+---
+
 ## What Gets Copied to Your Project
 
 ```
@@ -163,6 +184,7 @@ AIAgentMinder deliberately does not try to be:
 - [How It Works](docs/how-it-works.md) — context system, session lifecycle, hook details
 - [Customization Guide](docs/customization-guide.md) — what to customize and how
 - [Product Brief Creation Guide](docs/strategy-creation-guide.md) — using `/plan` or writing manually
+- [Examples](examples/) — filled-in state files from a realistic project (recipe API)
 
 ---
 
